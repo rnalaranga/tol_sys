@@ -1,7 +1,12 @@
 import axios from 'axios';
 
+let apiUrl = import.meta.env.VITE_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:5000/api' : `${window.location.protocol}//${window.location.hostname}/api`);
+if (window.location.protocol === 'https:' && apiUrl.startsWith('http://')) {
+  apiUrl = apiUrl.replace('http://', 'https://').replace(':5000', '');
+}
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:5000/api' : `${window.location.protocol}//${window.location.hostname}/api`),
+  baseURL: apiUrl,
   headers: { 'Content-Type': 'application/json' },
 });
 
