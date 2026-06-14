@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import Sidebar from './Sidebar';
 import Header from './Header';
 import { Outlet, useLocation } from 'react-router-dom';
@@ -13,15 +14,24 @@ const PAGE_TITLES = {
 };
 
 export default function Layout() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
   const key = Object.keys(PAGE_TITLES).find(k => location.pathname.startsWith(k)) || '/dashboard';
   const { title, subtitle } = PAGE_TITLES[key] || { title: 'Orient Life CPD', subtitle: '' };
 
+  useEffect(() => {
+    setSidebarOpen(false);
+  }, [location.pathname]);
+
   return (
     <div className="app-layout">
-      <Sidebar />
+      <div 
+        className={`sidebar-backdrop ${sidebarOpen ? 'show' : ''}`} 
+        onClick={() => setSidebarOpen(false)}
+      ></div>
+      <Sidebar isOpen={sidebarOpen} />
       <div className="main-content">
-        <Header title={title} subtitle={subtitle} />
+        <Header title={title} subtitle={subtitle} onMenuClick={() => setSidebarOpen(true)} />
         <main className="page-content">
           <Outlet />
         </main>

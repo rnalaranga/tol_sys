@@ -1,15 +1,20 @@
-import { Bell, Moon, Sun } from 'lucide-react';
+import { Bell, Moon, Sun, Menu } from 'lucide-react';
 import { formatDate } from '../../utils/helpers';
 import { useTheme } from '../../context/ThemeContext';
 
-export default function Header({ title, subtitle }) {
+export default function Header({ title, subtitle, onMenuClick }) {
   const { theme, toggleTheme } = useTheme();
   const today = new Date();
   return (
     <header className="header">
-      <div className="header-left">
-        <div className="page-title">{title}</div>
-        {subtitle && <div className="page-subtitle">{subtitle}</div>}
+      <div className="header-left" style={{ display: 'flex', alignItems: 'center' }}>
+        <button className="menu-toggle" onClick={onMenuClick} title="Open Menu">
+          <Menu size={20} />
+        </button>
+        <div>
+          <div className="page-title">{title}</div>
+          {subtitle && <div className="page-subtitle">{subtitle}</div>}
+        </div>
       </div>
       <div className="header-right">
         <div className="header-date">

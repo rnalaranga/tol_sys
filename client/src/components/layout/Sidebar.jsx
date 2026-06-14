@@ -5,7 +5,7 @@ import {
   BarChart3, Shield, LogOut, Truck, Container, List, Briefcase
 } from 'lucide-react';
 
-export default function Sidebar() {
+export default function Sidebar({ isOpen }) {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -17,7 +17,7 @@ export default function Sidebar() {
   const initials = user?.name?.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) || 'U';
 
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
       <div className="sidebar-brand">
         <div className="brand-logo">
           <div className="brand-icon">OL</div>
